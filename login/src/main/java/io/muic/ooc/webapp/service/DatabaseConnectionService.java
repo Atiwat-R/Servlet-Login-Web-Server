@@ -13,6 +13,11 @@ public class DatabaseConnectionService {
 
     private final HikariDataSource ds;
 
+    /**
+     * Database connection pool using Hikari library
+     * The secret and variables are loaded from disk
+     * File config.properties isn't committed to git repo TODO: Shouldn't but I did anyway
+     */
     public DatabaseConnectionService() {
         ds = new HikariDataSource();
         ds.setMaximumPoolSize(20);
@@ -33,24 +38,6 @@ public class DatabaseConnectionService {
         return ds.getConnection();
     }
 
-//    public static void main(String[] args) {
-//
-//        try {
-//            Connection connection = ds.getConnection();
-//            String sql = "INSERT INTO tbl_user (username, password, display_name) VALUES (?,?,?);";
-//            PreparedStatement ps = connection.prepareStatement(sql);
-//            // Setting username column 1
-//            ps.setString(1, "my_username");
-//            // Setting my_password column 2
-//            ps.setString(2, "my_password");
-//            // Setting my_display_name column 3
-//            ps.setString(3, "my_display_name");
-//            ps.executeUpdate();
-//            connection.commit();
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
 
 }

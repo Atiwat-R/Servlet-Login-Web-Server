@@ -1,13 +1,11 @@
 package io.muic.ooc.webapp.config;
 
-import lombok.Builder;
+import lombok.Builder; // In the tutorial ajarn replace Lombok with normal Getter/Setter but since it kinda works here I'll keep Lombok
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter // lombok doesnt work for some reason -> Download Plugins
+@Getter
 @Setter
-@NoArgsConstructor
 @Builder
 public class ConfigProperties {
 
