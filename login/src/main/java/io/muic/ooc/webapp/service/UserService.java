@@ -20,7 +20,8 @@ public class UserService {
     private DatabaseConnectionService databaseConnectionService;
 
 
-    private UserService() { }
+    private UserService() {
+    }
 
     public static UserService getInstance() {
         if (service == null) {
@@ -32,10 +33,10 @@ public class UserService {
 
     // Create new user
     public void createUser(String username, String password, String displayName) throws UserServiceException {
-        try {
-            Connection connection = databaseConnectionService.getConnection();
-            PreparedStatement ps = connection.prepareStatement(INSERT_USER_SQL);
-
+        try (
+                Connection connection = databaseConnectionService.getConnection();
+                PreparedStatement ps = connection.prepareStatement(INSERT_USER_SQL);
+        ) {
             ps.setString(1, username);
             ps.setString(2, BCrypt.hashpw(password, BCrypt.gensalt())); // Instead of storing raw password, we hash it using BCrypt first and store encrypted version
             ps.setString(3, displayName);
@@ -52,10 +53,10 @@ public class UserService {
 
     // Find user by Username
     public User findByUsername(String username) {
-        try {
-            Connection connection = databaseConnectionService.getConnection();
-            PreparedStatement ps = connection.prepareStatement(SELECT_USER_SQL);
-
+        try (
+                Connection connection = databaseConnectionService.getConnection();
+                PreparedStatement ps = connection.prepareStatement(SELECT_USER_SQL);
+        ) {
             ps.setString(1, username);
             ResultSet resultSet = ps.executeQuery();
             resultSet.next();
@@ -79,9 +80,10 @@ public class UserService {
      */
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        try {
-            Connection connection = databaseConnectionService.getConnection();
-            PreparedStatement ps = connection.prepareStatement(SELECT_ALL_USERS_SQL);
+        try (
+                Connection connection = databaseConnectionService.getConnection();
+                PreparedStatement ps = connection.prepareStatement(SELECT_ALL_USERS_SQL);
+        ) {
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 User ele = new User(
@@ -108,6 +110,7 @@ public class UserService {
 
     /**
      * User can only change their display name when updating their profile
+     *
      * @param id
      * @param displayName
      * @return
@@ -120,20 +123,12 @@ public class UserService {
 
     /**
      * Changing password is its own method, separated from updating profile
+     *
      * @param newPassword
      */
     public void changePassword(String newPassword) {
         throw new UnsupportedOperationException("WIP");
     }
-
-
-
-
-
-
-
-
-
 
 
     public static void main(String[] args) throws UserServiceException {
