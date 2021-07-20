@@ -77,10 +77,18 @@
                         <td class="py-3">${user.displayName}</td>
                         <td class="py-3">
 
+<%--                            Edit--%>
                             <a class="btn btn-warning btn-sm"
                                type="button"
                                href="/user/edit?username=${user.username}">
                                 Edit
+                            </a>
+
+<%--                            Password--%>
+                            <a class="btn btn-info btn-sm"
+                               type="button"
+                               href="/user/password?username=${user.username}">
+                                Change Password
                             </a>
 
                             <c:if test="${currentUser.username != user.username}">

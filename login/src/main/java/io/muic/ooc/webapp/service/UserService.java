@@ -17,6 +17,7 @@ public class UserService {
     private static final String DELETE_USER_SQL = "DELETE FROM tbl_user WHERE username = ?;";
     private static final String SELECT_ALL_USERS_SQL = "SELECT * FROM tbl_user";
     private static final String UPDATE_USER_SQL = "UPDATE tbl_user SET display_name = ? WHERE username = ?;";
+    private static final String UPDATE_USER_PASSWORD_SQL = "UPDATE tbl_user SET password = ? WHERE username = ?;";
 
 
 
@@ -76,7 +77,6 @@ public class UserService {
     }
 
     // List all user
-
     /**
      * List all user in the database
      *
@@ -106,7 +106,6 @@ public class UserService {
 
 
     // Delete user
-
     /**
      * delete user by their Id
      * @param username id
@@ -126,8 +125,7 @@ public class UserService {
         }
     }
 
-    // Update user by user id
-
+    // Update user by username
     /**
      * User can only change their display name when updating their profile
      *
@@ -154,14 +152,27 @@ public class UserService {
     }
 
     // Change password
-
     /**
      * Changing password is its own method, separated from updating profile
      *
      * @param newPassword
      */
-    public void changePassword(String newPassword) {
-        throw new UnsupportedOperationException("WIP");
+    public void changePassword(String username, String newPassword) throws UserServiceException {
+        try (
+                Connection connection = databaseConnectionService.getConnection();
+                PreparedStatement ps = connection.prepareStatement(UPDATE_USER_PASSWORD_SQL);
+        ) {
+
+            ps.setString(1, BCrypt.hashpw(newPassword, BCrypt.gensalt())); // Instead of storing raw password, we hash it using BCrypt first and store encrypted version
+            ps.setString(2, username);
+
+            ps.executeUpdate();
+            // manually commit change
+            connection.commit();
+
+        } catch (SQLException throwables) {
+            throw new UserServiceException(throwables.getMessage());
+        }
     }
 
 

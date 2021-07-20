@@ -11,6 +11,7 @@ import io.muic.ooc.webapp.servlet.LoginServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
+import org.apache.tomcat.util.descriptor.web.ErrorPage;
 
 public class Webapp {
 
@@ -33,6 +34,10 @@ public class Webapp {
         try {
             ctx = tomcat.addWebapp("", docBase.getAbsolutePath());
             servletRouter.init(ctx);
+
+            // Customized Error page for redirection
+//            ErrorPage errorPage = new ErrorPage();
+//            ctx.addErrorPage();
 
             tomcat.start();
             tomcat.getServer().await();
