@@ -12,7 +12,13 @@
 </head>
 <body>
 <div class="container mt-4">
-
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">SSC Login Webapp</a>
+            <a class="btn btn-gray btn-sm" type="button" href="/logout">
+                Logout</a>
+        </div>
+    </nav>
     <h3 class="my-4">Welcome, ${username}</h3>
     <table class="table table-striped table-bordered">
         <thead>
@@ -31,7 +37,9 @@
                 <td class="py-3">${user.displayName}</td>
                 <td class="py-3">
                     <button class="btn btn-warning btn-sm" type="button">Edit</button>
-                    <button class="btn btn-danger btn-sm" type="button">Delete</button>
+                    <c:if test="${currentUser.username != user.username}">
+                        <button class="btn btn-danger btn-sm" type="button">Delete</button>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>
