@@ -150,10 +150,12 @@ public class UserService {
 
 
     public static void main(String[] args) throws UserServiceException {
-//        UserService userService = getInstance();
+        UserService userService = getInstance();
 
         // Create new User
-//        userService.createUser("Etheon", "12345", "Dragonslayer69");
+        userService.createUser("Ren", "12345", "Jove");
+        userService.createUser("Amatheyst", "111", "BB");
+        userService.createUser("Lasker Uno", "11037", "LEONZ");
 //        userService.createUser("admin", "777", "Admin_Jill");
 
         // Find user by username

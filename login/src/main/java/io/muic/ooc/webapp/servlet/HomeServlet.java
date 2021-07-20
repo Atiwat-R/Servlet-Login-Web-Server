@@ -44,16 +44,17 @@ public class HomeServlet extends HttpServlet implements Routable {
 
             UserService userService = UserService.getInstance();
 
+
             request.setAttribute("currentUser", userService.findByUsername(username));
             request.setAttribute("users", userService.findAll());
 
 
 
-            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/home.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
             rd.include(request, response);
 
-            request.removeAttribute("hasError");
-            request.removeAttribute("message");
+            request.getSession().removeAttribute("hasError");
+            request.getSession().removeAttribute("message");
         } else {
             request.removeAttribute("hasError");
             request.removeAttribute("message");
