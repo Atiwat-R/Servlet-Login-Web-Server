@@ -20,6 +20,26 @@
         </div>
     </nav>
     <h3 class="my-4">Welcome, ${username}</h3>
+
+
+    <c:if test="${not empty message}">
+        <c:choose>
+            <c:when test="${empty var1}">
+                <div class="alert alert-success" role="alert">
+                        ${message}
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="alert alert-danger" role="alert">
+                        ${message}
+                </div>
+            </c:otherwise>
+        </c:choose>
+
+
+
+    </c:if>
+
     <table class="table table-striped table-bordered">
         <thead>
         <tr>
@@ -38,7 +58,7 @@
                 <td class="py-3">
                     <button class="btn btn-warning btn-sm" type="button">Edit</button>
                     <c:if test="${currentUser.username != user.username}">
-                        <button class="btn btn-danger btn-sm" type="button">Delete</button>
+                        <a class="btn btn-danger btn-sm" type="button" href="/user/delete?username=${user.username}">Delete</a>
                     </c:if>
                 </td>
             </tr>
