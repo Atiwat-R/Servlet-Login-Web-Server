@@ -16,6 +16,8 @@ public class UserService {
     private static final String SELECT_USER_SQL = "SELECT * FROM tbl_user WHERE username = ?;";
     private static final String DELETE_USER_SQL = "DELETE FROM tbl_user WHERE username = ?;";
     private static final String SELECT_ALL_USERS_SQL = "SELECT * FROM tbl_user";
+    private static final String UPDATE_USER_SQL = "UPDATE tbl_user SET display_name = ? WHERE username = ?;";
+
 
 
     private static UserService service;
@@ -129,12 +131,26 @@ public class UserService {
     /**
      * User can only change their display name when updating their profile
      *
-     * @param id
+     * @param username
      * @param displayName
      * @return
      */
-    public User uodateUserById(long id, String displayName) {
-        throw new UnsupportedOperationException("WIP");
+    public void updateUserByUsername(String username, String displayName) throws UserServiceException {
+        try (
+                Connection connection = databaseConnectionService.getConnection();
+                PreparedStatement ps = connection.prepareStatement(UPDATE_USER_SQL);
+        ) {
+
+            ps.setString(1, displayName);
+            ps.setString(2, username);
+
+            ps.executeUpdate();
+            // manually commit change
+            connection.commit();
+
+        } catch (SQLException throwables) {
+            throw new UserServiceException(throwables.getMessage());
+        }
     }
 
     // Change password

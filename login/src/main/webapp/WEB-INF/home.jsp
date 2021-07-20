@@ -76,7 +76,12 @@
                         <td class="py-3">${user.username}</td>
                         <td class="py-3">${user.displayName}</td>
                         <td class="py-3">
-                            <button class="btn btn-warning btn-sm" type="button">Edit</button>
+
+                            <a class="btn btn-warning btn-sm"
+                               type="button"
+                               href="/user/edit?username=${user.username}">
+                                Edit
+                            </a>
 
                             <c:if test="${currentUser.username != user.username}">
 
@@ -85,8 +90,8 @@
                                    type="button"
                                    href="/user/delete?username=${user.username}"
                                    data-bs-toggle="modal"
-                                   data-bs-target="#delete-modal-${user.id}"
-                                >Delete
+                                   data-bs-target="#delete-modal-${user.id}">
+                                    Delete
                                 </a>
 
                                 <!-- Modal -->
