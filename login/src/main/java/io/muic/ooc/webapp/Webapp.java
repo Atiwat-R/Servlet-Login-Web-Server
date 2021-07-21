@@ -36,8 +36,10 @@ public class Webapp {
             servletRouter.init(ctx);
 
             // Customized Error page for redirection
-//            ErrorPage errorPage = new ErrorPage();
-//            ctx.addErrorPage();
+            ErrorPage error404Page = new ErrorPage();
+            error404Page.setErrorCode(404);
+            error404Page.setLocation("/WEB_INF/error404.jsp");
+            ctx.addErrorPage(error404Page);
 
             tomcat.start();
             tomcat.getServer().await();
